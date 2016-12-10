@@ -5,7 +5,6 @@ import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.KeyStroke;
 
@@ -18,14 +17,18 @@ import net.josephkeane.mp3player.data_types.Song;
 public class MusicPlayerMenuBar extends JMenuBar{
 	private static final long serialVersionUID = 7738971398293953079L;
 	
-	private JMenu fileMenu;
-	private JMenu playListMenu;
+	private MusicPlayerMenu fileMenu;
+	private MusicPlayerMenu playListMenu;
+	private MusicPlayerMenu sortMenu;
 	private MusicPlayerMenuItem fileAdd = new MusicPlayerMenuItem("Add Song", 'A');
 	private MusicPlayerMenuItem fileRemove = new MusicPlayerMenuItem("Remove Song", 'D');
 	private MusicPlayerMenuItem filePlay = new MusicPlayerMenuItem("Play Song", 'P');
 	private MusicPlayerMenuItem fileSave = new MusicPlayerMenuItem("Save Song", 'S');
 	private MusicPlayerMenuItem playListAdd = new MusicPlayerMenuItem("Create PlayList", 'C');
 	private MusicPlayerMenuItem playListSelect = new MusicPlayerMenuItem("Select PlayList", 'L');
+	private MusicPlayerMenuItem sortSong= new MusicPlayerMenuItem("Sort Alph Song", '/');
+	private MusicPlayerMenuItem sortArtist= new MusicPlayerMenuItem("Sort Alph Artsist", 'O');
+	
 	private MusicPlayer mp;
 	private Song[] songsArray;
 	private Song[] allSongsArray;
@@ -37,6 +40,7 @@ public class MusicPlayerMenuBar extends JMenuBar{
 		this.setBackground(Color.BLACK);
 		fileMenu = new MusicPlayerMenu("File", 'F');
 		playListMenu = new MusicPlayerMenu("PlayLists", 'P');
+		sortMenu = new MusicPlayerMenu("Sort", 'S');
 		if (mp.playLists.get(0).playList.size() != 0) 
 			resetArrays();
 		initFileAdd();
@@ -45,8 +49,11 @@ public class MusicPlayerMenuBar extends JMenuBar{
 		initFileSave();
 		initPlayListAdd();
 		initPlayListSelect();
+		initSortSong();
+		initSortArtist();
 		add(fileMenu);
 		add(playListMenu);
+		add(sortMenu);
 	}
 	
 	private void resetArrays() {
@@ -159,6 +166,30 @@ public class MusicPlayerMenuBar extends JMenuBar{
 			}
 		});
 		playListMenu.add(playListSelect);
+		
+	}
+	
+	private void initSortSong() {
+		sortSong.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				mp.sortSong();
+				resetArrays();
+			}
+		});
+		sortMenu.add(sortSong);
+		
+	}
+	
+	private void initSortArtist() {
+		sortArtist.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				mp.sortArtist();
+				resetArrays();
+			}
+		});
+		sortMenu.add(sortArtist);
 		
 	}
 	

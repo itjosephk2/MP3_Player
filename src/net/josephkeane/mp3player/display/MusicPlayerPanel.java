@@ -7,7 +7,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.util.Random;
 
 import javax.swing.ImageIcon;
 import javax.swing.JCheckBox;
@@ -177,15 +176,10 @@ public class MusicPlayerPanel extends JPanel {
 				int newSong = 0;
 				if (mp.currentPlayList.playList.size() > 1) {
 					do {
-						if (mp.shuffle) {
-							Random rand = new Random();
-							newSong = rand.nextInt(mp.currentPlayList.playList.size());
-						} else {
-							if (mp.currentSongIndex != mp.currentPlayList.playList.size() - 1)
-								newSong = mp.currentSongIndex + 1;
-							else
-								newSong = 0;
-						}
+						if (mp.currentSongIndex != mp.currentPlayList.playList.size() - 1)
+							newSong = mp.currentSongIndex + 1;
+						else
+							newSong = 0;
 					} while (mp.currentPlayList.playList.get(newSong) == mp.currentSong);
 				} else {
 					return;
@@ -208,15 +202,10 @@ public class MusicPlayerPanel extends JPanel {
 				int newSong = 0;
 				if (mp.currentPlayList.playList.size() > 1) {
 					do {
-						if (mp.shuffle) {
-							Random rand = new Random();
-							newSong = rand.nextInt(mp.currentPlayList.playList.size());
-						} else {
-							if (mp.currentSongIndex != 0)
-								newSong = mp.currentSongIndex - 1;
-							else
-								newSong = mp.currentPlayList.playList.size() - 1;
-						}
+						if (mp.currentSongIndex != 0)
+							newSong = mp.currentSongIndex - 1;
+						else
+							newSong = mp.currentPlayList.playList.size() - 1;
 					} while (newSong == mp.currentSongIndex);
 				} else {
 					return;
@@ -263,9 +252,11 @@ public class MusicPlayerPanel extends JPanel {
 				if (!mp.shuffle) {
 					mp.shuffle = true;
 					shuffleBox.setIcon(new ImageIcon("img\\shuffleimgactive.png"));
+					mp.shuffle();
 				} else {
 					mp.shuffle = false;
 					shuffleBox.setIcon(new ImageIcon("img\\shuffleimginactive.png"));
+					mp.sortSong();
 				}
 			}
 		});
